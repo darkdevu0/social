@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import axios from "axios";
+import Theme from './util/theme'
 
-function App() {
+// MUI
+import { MuiThemeProvider } from "@material-ui/core";
+import CreateMuiTheme from "@material-ui/core/styles/createMuiTheme";
+
+// pages
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
+
+const theme = CreateMuiTheme(Theme);
+const [token, setToken] = useState(token);
+
+useEffect(() => {
+  setToken(localStorage.getItem('FBidToken'));
+}, []);
+
+if (token) {
+  
+}
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div className='App'>
+        <Router>
+          <Navbar />
+          <div className='container'>
+            <Switch>
+              <Route path='/login' component={Login} />
+              <Route path='/signUp' component={Signup} />
+              <Route path='/' component={Home} />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
