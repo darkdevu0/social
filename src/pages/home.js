@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import Profile from '../components/Profile'
 
 // MUI
 import Grid from "@material-ui/core/Grid";
@@ -26,17 +27,16 @@ const Home = () => {
 
   let recentScreamMarkup = screams ? (
     screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
-  ) : (
-    <CircularProgress color='secondary' />
+  ) : (    <CircularProgress color='secondary' />
   );
 
   return (
-    <Grid container spacing={10}>
+    <Grid container spacing={6}>
       <Grid item sm={8} xs={12}>
         {recentScreamMarkup}
       </Grid>
       <Grid item sm={4} xs={12}>
-        <p>Profile ... </p>
+        <Profile />
       </Grid>
     </Grid>
   );

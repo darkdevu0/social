@@ -4,6 +4,10 @@ import AppIcon from "../images/icon.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// REDUX
+import { connect } from 'react-redux'
+import {signupUser} from '../redux/actions/userActions'
+
 // MUI
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -21,29 +25,12 @@ const Signup = (props) => {
   const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
 
   const { classes } = props;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setErrors({});
-
-    axios
-      .post("/Signup", { email, password, confirmPassword, handle})
-      .then((res) => {
-          console.log(res.data);
-          localStorage.setItem('FBidToken', `Bearer ${res.data.token}`);
-        setLoading(false);
-        props.history.replace("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrors(err.response.data);
-        setLoading(false);
-      });
+    props.signupUser(email, password, confirmPassword, handle, props.history);
   };
 
   const handleChange = (event) => {
@@ -65,8 +52,8 @@ const Signup = (props) => {
             type='email'
             label='Email'
             className={classes.textField}
-            helperText={errors.email}
-            error={errors.email ? true : false}
+            helperText={props.UI.errors.email}
+            error={props.UI.errors.email ? true : false}
             value={email}
             onChange={handleChange}
             fullWidth
@@ -77,8 +64,8 @@ const Signup = (props) => {
             type='text'
             label='Handle'
             className={classes.textField}
-            helperText={errors.handle}
-            error={errors.handle ? true : false}
+            helperText={props.UI.errors.handle}
+            error={props.UI.errors.handle ? true : false}
             value={handle}
             onChange={handleChange}
             fullWidth
@@ -89,8 +76,8 @@ const Signup = (props) => {
             type='password'
             label='Password'
             className={classes.textField}
-            helperText={errors.password}
-            error={errors.password ? true : false}
+            helperText={props.UI.errors.password}
+            error={props.UI.errors.password ? true : false}
             value={password}
             onChange={handleChange}
             fullWidth
@@ -101,18 +88,18 @@ const Signup = (props) => {
             type='password'
             label='Confirm Password'
             className={classes.textField}
-            helperText={errors.confirmPassword}
-            error={errors.confirmPassword ? true : false}
+            helperText={props.UI.errors.confirmPassword}
+            error={props.UI.errors.confirmPassword ? true : false}
             value={confirmPassword}
             onChange={handleChange}
             fullWidth
           />
-          {errors.general && (
+          {props.UI.errors.general && (
             <Typography variant='body2' className={classes.customError}>
-              {errors.general}
+              {props.UI.errors.general}
             </Typography>
           )}
-          {!loading ? (
+          {!props.UI.loading ? (
             <Button
               type='submit'
               variant='contained'
@@ -136,6 +123,20 @@ const Signup = (props) => {
 
 Signup.propTypes = {
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(Signup);
+const mapStateToProps = state => {
+  return {
+    UI: state.UI,
+    user: state.user
+  }
+};
+
+const mapActionToProps = {
+  signupUser
+};
+
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(Signup));

@@ -4,6 +4,14 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import axios from "axios";
 import Theme from "./util/theme";
+import jwtDecode from "jwt-decode";
+import AuthRoute from "./util/AuthRoute.js";
+
+// Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { SET_AUTHENTICATED } from './redux/types'
+import {logoutUser, getUserData} from './redux/actions/userActions'
 
 // MUI
 import { MuiThemeProvider } from "@material-ui/core";
@@ -16,7 +24,7 @@ import Signup from "./pages/signup";
 
 const theme = CreateMuiTheme(Theme);
 
-const App = () => {
+const App = (props) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
@@ -24,22 +32,33 @@ const App = () => {
   }, []);
 
   if (token) {
+    const decodedToken = jwtDecode(token);
+    if (decodedToken.exp * 1000 < Date.now()) {
+      store.dispatch(logoutUser());
+      window.location.href = "/login";
+    } else {
+      store.dispatch({ type: SET_AUTHENTICATED });
+      axios.defaults.headers.common["Authorization"] = token;
+      store.dispatch(getUserData());
+    }
   }
 
   return (
     <MuiThemeProvider theme={theme}>
-      <div className='App'>
-        <Router>
-          <Navbar />
-          <div className='container'>
-            <Switch>
-              <Route path='/login' component={Login} />
-              <Route path='/signUp' component={Signup} />
-              <Route path='/' component={Home} />
-            </Switch>
-          </div>
-        </Router>
-      </div>
+      <Provider store={store}>
+        <div className='App'>
+          <Router>
+            <Navbar />
+            <div className='container'>
+              <Switch>
+                <AuthRoute path='/login' component={Login} />
+                <AuthRoute path='/signUp' component={Signup} />
+                <Route path='/' component={Home} />
+              </Switch>
+            </div>
+          </Router>
+        </div>
+      </Provider>
     </MuiThemeProvider>
   );
 };
