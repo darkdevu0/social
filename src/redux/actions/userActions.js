@@ -56,9 +56,29 @@ export const getUserData = () => (dispatch) => {
       dispatch({ type: SET_USER, payload: res.data });
     })
     .catch((err) => {
-      console.log(err.response.data);
+      console.log(err);
     });
 };
+
+export const uploadImage = (formData) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  Axios.post("/user/image", formData)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const editUserDetails = userDetails => dispatch => {
+  dispatch({ type: LOADING_USER });
+  Axios.post('/user', userDetails)
+    .then(() => {
+      dispatch(getUserData());
+    })
+    .catch(err => console.log(err));
+}
 
 // helper
 

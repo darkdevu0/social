@@ -17,7 +17,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
-  ...theme.spreadLog,
+  ...theme.log
 });
 
 const Login = (props) => {

@@ -1,33 +1,27 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import Profile from '../components/Profile'
+import PropTypes from 'prop-types'
+import Profile from "../components/Profile";
+
+// redux
+import { connect } from "react-redux";
+import { getScreams } from "../redux/actions/dataActions";
 
 // MUI
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Scream from "../components/Scream";
 
-const Home = () => {
-  const [screams, setScreams] = useState(null);
-
-  const _isMounted = useRef(true);
-
+const Home = (props) => {
   useEffect(() => {
-    axios
-      .get("/screams")
-      .then((res) => {
-        if (_isMounted.current) setScreams(res.data);
-      })
-      .catch((err) => console.log(err));
-
-    return () => {
-      _isMounted.current = false;
-    };
+    props.getScreams();
   }, []);
 
-  let recentScreamMarkup = screams ? (
-    screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
-  ) : (    <CircularProgress color='secondary' />
+  const { screams, loading } = props.data;
+
+  let recentScreamMarkup = loading === false ? (
+   screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
+  ) : (
+    <CircularProgress color='secondary' />
   );
 
   return (
@@ -42,4 +36,13 @@ const Home = () => {
   );
 };
 
-export default Home;
+Home.propTypes = {
+  getScreams: PropTypes.func.isRequired
+}
+
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+export default connect(mapStateToProps, { getScreams })(Home);

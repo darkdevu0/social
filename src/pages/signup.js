@@ -17,7 +17,7 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const styles = (theme) => ({
-  ...theme.spreadLog,
+  ...theme.log
 });
 
 const Signup = (props) => {
@@ -110,7 +110,7 @@ const Signup = (props) => {
             </Button>
           ) : (
             <CircularProgress className={classes.progress} />
-          )}
+            )}
           <small className={classes.small}>
             Already have an account ? <Link to='/login'>Login</Link>
           </small>
