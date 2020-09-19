@@ -4,10 +4,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import EditDetails from './EditDetails'
+import ProfileSkeleton from '../../util/ProfileSkeleton'
+
 
 // Redux
 import { connect } from "react-redux";
-import {uploadImage, logoutUser} from '../redux/actions/userActions';
+import {uploadImage, logoutUser} from '../../redux/actions/userActions';
 
 // MUI
 import Button from "@material-ui/core/Button";
@@ -20,7 +22,6 @@ import Tooltip from "@material-ui/core/Tooltip";
 // Icons
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
-import Calender from "@material-ui/icons/CalendarViewDay";
 import { CalendarToday, KeyboardReturn } from "@material-ui/icons";
 import EditIcon from "@material-ui/icons/Edit";
 
@@ -182,7 +183,7 @@ const Profile = (props) => {
       </Paper>
     )
   ) : (
-    <p>loading...</p>
+    <ProfileSkeleton/>
   );
 
   return profileMarkup;

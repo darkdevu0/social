@@ -3,7 +3,10 @@ import {
   LIKE_SCREAM,
   UNLIKE_SCREAM,
   LOADING_DATA,
-  SET_SCREAMS, DELETE_SCREAM
+  SET_SCREAMS,
+  DELETE_SCREAM,
+  POST_SCREAM,
+  SUMBIT_COMMENT,
 } from "../types";
 
 const init = {
@@ -38,15 +41,38 @@ function reducer(state = init, action) {
       );
       screams = [...state.screams];
       screams[index] = action.payload;
-      return {
-        ...state,
-        screams: screams,
-      };
+      if (state.scream.screamId === action.payload.screamId) {
+        return {
+          ...state,
+          scream: action.payload,
+          screams: screams,
+        };
+      } else {
+        return {
+          ...state,
+          screams: screams,
+        };
+      }
     case DELETE_SCREAM:
       return {
         ...state,
-        screams: state.screams.filter(scream => scream.screamId !== action.payload)
-      }
+        screams: state.screams.filter(
+          (scream) => scream.screamId !== action.payload
+        ),
+      };
+    case POST_SCREAM:
+      return {
+        ...state,
+        screams: [action.payload, ...state.screams],
+      };
+    case SUMBIT_COMMENT:
+      return {
+        ...state,
+        scream: {
+          ...state.scream,
+          comments: [action.payload, ...state.scream.comments],
+        },
+      };
     default:
       return state;
   }

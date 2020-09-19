@@ -18,3 +18,7 @@ body {
 a {
   text-decoration: none;
 }
+
+.temp::-webkit-scrollbar {
+  display: none;
+} 

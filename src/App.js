@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Layout/Navbar";
 import axios from "axios";
 import Theme from "./util/theme";
 import jwtDecode from "jwt-decode";
 import AuthRoute from "./util/AuthRoute.js";
+import User from "./pages/user";
 
 // Redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { SET_AUTHENTICATED } from './redux/types'
-import {logoutUser, getUserData} from './redux/actions/userActions'
+import { SET_AUTHENTICATED } from "./redux/types";
+import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 // MUI
 import { MuiThemeProvider } from "@material-ui/core";
@@ -51,9 +52,11 @@ const App = (props) => {
             <Navbar />
             <div className='container'>
               <Switch>
-                <AuthRoute path='/login' component={Login} />
-                <AuthRoute path='/signUp' component={Signup} />
-                <Route path='/' component={Home} />
+                <AuthRoute exact path='/login' component={Login} />
+                <AuthRoute exact path='/signUp' component={Signup} />
+                <Route exact path='/' component={Home} />
+                <Route path='/users/:handle' exact component={User} />
+                <Route path='/users/:handle/scream/:screamId' exact component={User} />
               </Switch>
             </div>
           </Router>
