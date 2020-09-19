@@ -22,8 +22,11 @@ import CreateMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import Axios from "axios";
 
 const theme = CreateMuiTheme(Theme);
+
+Axios.defaults.baseURL = 'https://asia-south1-social-52b5a.cloudfunctions.net/api'
 
 const App = (props) => {
   const [token, setToken] = useState(null);

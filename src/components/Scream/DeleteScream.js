@@ -65,7 +65,7 @@ const DeleteScream = ({ screamId, classes, dScream }) => {
 };
 
 DeleteScream.propTypes = {
-  deleteScream: PropTypes.func.isRequired,
+  deleteScream: PropTypes.func,
   classes: PropTypes.object.isRequired,
 };
 

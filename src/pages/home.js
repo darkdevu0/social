@@ -19,7 +19,7 @@ const Home = (props) => {
 
   const { screams, loading } = props.data;
 
-  let recentScreamMarkup = loading === false ? (
+  let recentScreamMarkup = loading === false && screams !== [] ? (
    screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
   ) : (
     <ScreamSkeleton />
