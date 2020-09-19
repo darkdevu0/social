@@ -64,6 +64,7 @@ const ScreamDialog = (props) => {
 
   useEffect(() => {
     if (props.openDialog) handleOpen();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -79,7 +80,6 @@ const ScreamDialog = (props) => {
       comments,
     },
     UI: { loading },
-    openDialog,
   } = props;
 
   const handleOpen = () => {

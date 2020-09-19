@@ -35,6 +35,7 @@ const user = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { screams, loading } = props.data;

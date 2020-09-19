@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types'
 import Profile from "../components/Profile/Profile";
 import ScreamSkeleton from '../util/ScreamSkeleton'
@@ -9,12 +9,12 @@ import { getScreams } from "../redux/actions/dataActions";
 
 // MUI
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Scream from "../components/Scream/Scream";
 
 const Home = (props) => {
   useEffect(() => {
     props.getScreams();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { screams, loading } = props.data;

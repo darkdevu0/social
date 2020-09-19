@@ -1,8 +1,7 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import Tooltip from "@material-ui/core/Tooltip";
 import MyButton from "../../util/MyButton";
 
 // MUI
@@ -11,8 +10,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import EditIcon from "@material-ui/icons/Edit";
-import { IconButton } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
@@ -47,6 +44,7 @@ const PostScream = ({ classes, UI: { loading, errors }, postScream, clearErrors 
       setBody("");
       clearErrors();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
   const handleOpen = () => {

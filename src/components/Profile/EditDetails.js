@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -51,7 +51,7 @@ const EditDetails = (props) => {
     eval(`set${event.target.name}('${event.target.value}')`);
   };
 
-  const handleSubmit = () => {
+  function handleSubmit() {
     const userDetails = {
       bio,
       location,
@@ -59,7 +59,7 @@ const EditDetails = (props) => {
     };
     props.editUserDetails(userDetails);
     handleClose();
-  };
+  }
 
   return (
     <Fragment>
